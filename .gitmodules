@@ -1,0 +1,6 @@
+[submodule "adc_data/ADC-survey"]
+	path = hwcomponents_adc/adc_data/ADC-survey
+	url = https://github.com/bmurmann/ADC-survey.git
+[submodule "hwcomponents_adc/adc_data/ADC-survey"]
+	path = hwcomponents_adc/adc_data/ADC-survey
+	url = https://github.com/bmurmann/ADC-survey.git
