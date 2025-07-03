@@ -23,7 +23,7 @@ hwc --list | grep ADC
 ## Usage
 ### Inerface
 
-This estimator introduces the ADC estimator. ADC estimators can be instantiated with the
+This model introduces the ADC model. ADC models can be instantiated with the
 following parameters:
 - `n_bits`: the resolution of the ADC
 - `tech_node`: the technology node in meters
@@ -78,7 +78,7 @@ https://github.com/bmurmann/ADC-survey
 This work is licensed under the MIT license. See license.txt for details.
 
 ## Citing HWComponents-ADC
-If you use this estimator in your work, please cite the following:
+If you use this model in your work, please cite the following:
 
 ```bibtex
 @misc{andrulis2024modelinganalogdigitalconverterenergyarea,

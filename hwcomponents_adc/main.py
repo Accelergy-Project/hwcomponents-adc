@@ -6,7 +6,7 @@ from typing import Dict, List
 import yaml
 from hwcomponents_adc.headers import *
 from .optimizer import ADCRequest
-from hwcomponents import EnergyAreaEstimator, actionDynamicEnergy
+from hwcomponents import EnergyAreaModel, actionDynamicEnergy
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -78,7 +78,7 @@ def dict_to_str(attributes: Dict) -> str:
     return s
 
 
-class ADC(EnergyAreaEstimator):
+class ADC(EnergyAreaModel):
     component_name = [
         "adc",
         "pim_adc",
