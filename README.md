@@ -1,6 +1,6 @@
 # HWComponents-ADC
-HWComponents-ADC provides estimates for the area and energy of Analog-Digital Converters
-(ADCs) for use in analog & mixed-signal accelerator design space exploration.
+HWComponents-ADC models the area and energy of Analog-Digital Converters (ADCs) for use
+in analog & mixed-signal accelerator designs.
 
 Models are based on statistical analysis of published ADC performance data in Boris
 Murmann's ADC Performance Survey [1]. The energy model is based on the observation that
