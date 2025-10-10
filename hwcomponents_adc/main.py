@@ -88,7 +88,7 @@ class ADC(EnergyAreaModel):
         "cim_array_adc",
         "cim_adc",
     ]
-    priority_0_to_100 = 75
+    priority = 0.75
 
     def __init__(self, n_bits: int, tech_node: str, throughput: float, n_adcs=1):
         self.n_bits = n_bits
