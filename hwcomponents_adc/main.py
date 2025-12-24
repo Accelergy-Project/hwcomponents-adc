@@ -79,6 +79,24 @@ def dict_to_str(attributes: Dict) -> str:
 
 
 class ADC(EnergyAreaModel):
+    """
+    Analog digital converter (ADC) model based on https://arxiv.org/abs/2404.06553.
+
+    Args:
+        n_bits: The number of bits of the ADC. For those who are not familiar with ADCs,
+           ignore the following: this is assumed to be the effective number of bits
+           (ENOB), not the bit precision of the output.
+        tech_node: The technology node of the ADC in meters.
+        throughput: The throughput of the ADC in samples per second.
+        n_adcs: The number of ADCs. If there is >1 ADC, then throughput is the total
+           throughput of all ADCs.
+
+    Attributes:
+        n_bits: The number of bits of the ADC.
+        tech_node: The technology node of the ADC in meters.
+        throughput: The throughput of the ADC in samples per second.
+        n_adcs: The number of ADCs.
+    """
     component_name = [
         "adc",
         "pim_adc",
@@ -90,13 +108,13 @@ class ADC(EnergyAreaModel):
     ]
     priority = 0.75
 
-    def __init__(self, n_bits: int, tech_node: str, throughput: float, n_adcs=1):
+    def __init__(self, n_bits: int, tech_node: float, throughput: float, n_adcs=1):
         self.n_bits = n_bits
         self.tech_node = tech_node
         self.throughput = throughput
         self.n_adcs = n_adcs
 
-        self.model = self.make_model()
+        self._model = self.make_model()
 
         assert self.n_bits >= 4, f"Bits must be >= 4"
 
@@ -116,8 +134,8 @@ class ADC(EnergyAreaModel):
                 f'-g" to generate a model.'
             )
         with open(MODEL_FILE, "r") as f:
-            self.model = yaml.safe_load(f)
-        return self.model
+            self._model = yaml.safe_load(f)
+        return self._model
 
     def _get_area(self) -> float:
         """
@@ -132,9 +150,15 @@ class ADC(EnergyAreaModel):
             },
             self.logger,
         )
-        return request.area(self.model) * 1e-12  # um^2 -> m^2
+        return request.area(self._model) * 1e-12  # um^2 -> m^2
 
     def get_energy(self):
+        """
+        Returns the energy for one ADC conversion in Joules.
+
+        Returns:
+            The energy for one ADC conversion in Joules.
+        """
         request = adc_attr_to_request(
             {
                 "n_bits": self.n_bits,
@@ -144,25 +168,55 @@ class ADC(EnergyAreaModel):
             },
             self.logger,
         )
-        return request.energy_per_op(self.model) * 1e-12  # pJ -> J
+        return request.energy_per_op(self._model) * 1e-12  # pJ -> J
 
     @actionDynamicEnergy
     def convert(self):
+        """
+        Returns the energy for one ADC conversion in Joules.
+
+        Returns:
+            The energy for one ADC conversion in Joules.
+        """
         # Assume leakage is 20% of the total energy
         return self.get_energy() * 0.8
 
     @actionDynamicEnergy
     def drive(self):
+        """
+        Returns the energy for one ADC conversion in Joules.
+
+        Returns:
+            The energy for one ADC conversion in Joules.
+        """
         return self.convert()
 
     @actionDynamicEnergy
     def read(self):
+        """
+        Returns the energy for one ADC conversion in Joules.
+
+        Returns:
+            The energy for one ADC conversion in Joules.
+        """
         return self.convert()
 
     @actionDynamicEnergy
     def sample(self):
+        """
+        Returns the energy for one ADC conversion in Joules.
+
+        Returns:
+            The energy for one ADC conversion in Joules.
+        """
         return self.convert()
 
     @actionDynamicEnergy
     def activate(self):
+        """
+        Returns the energy for one ADC conversion in Joules.
+
+        Returns:
+            The energy for one ADC conversion in Joules.
+        """
         return self.convert()
