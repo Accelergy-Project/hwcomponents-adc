@@ -2,6 +2,9 @@
 HWComponents-ADC models the area and energy of Analog-Digital Converters (ADCs) for use
 in analog & mixed-signal accelerator designs.
 
+These models are for use with the HWComponents package, found at
+https://accelergy-project.github.io/hwcomponents/.
+
 Models are based on statistical analysis of published ADC performance data in Boris
 Murmann's ADC Performance Survey [1]. The energy model is based on the observation that
 the maximum efficiency of an ADC is bounded by the sampling rate and the resolution [1],
@@ -9,12 +12,11 @@ and the area model is based on regression analysis. Estimations are optimistic; 
 answer the question "what is the best possible ADC design for the given parameters?".
 
 ## Installation
-Clone the repository and install with pip:
+
+Install from PyPI:
 
 ```bash
-git clone https://github.com/Accelergy-Project/hwcomponents-adc.git
-cd hwcomponents-adc
-pip install .
+pip install hwcomponents-adc
 
 # Check that the installation is successful
 hwc --list | grep ADC
@@ -82,12 +84,12 @@ If you use this model in your work, please cite the following:
 
 ```bibtex
 @misc{andrulis2024modelinganalogdigitalconverterenergyarea,
-      title={Modeling Analog-Digital-Converter Energy and Area for Compute-In-Memory Accelerator Design}, 
+      title={Modeling Analog-Digital-Converter Energy and Area for Compute-In-Memory Accelerator Design},
       author={Tanner Andrulis and Ruicong Chen and Hae-Seung Lee and Joel S. Emer and Vivienne Sze},
       year={2024},
       eprint={2404.06553},
       archivePrefix={arXiv},
       primaryClass={cs.AR},
-      url={https://arxiv.org/abs/2404.06553}, 
+      url={https://arxiv.org/abs/2404.06553},
 }
 ```
