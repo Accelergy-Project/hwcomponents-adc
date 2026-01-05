@@ -36,6 +36,6 @@ hwcomponents_adc = [
 
 [tool.setuptools_scm]
 write_to = "hwcomponents_adc/_version.py"
-fallback_version = "1.0.0"
+fallback_version = "1.0"
 version_scheme = "setup_scm_version:post_version"
 local_scheme = "setup_scm_version:no_local"
