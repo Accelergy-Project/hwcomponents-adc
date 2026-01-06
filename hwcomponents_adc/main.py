@@ -62,7 +62,7 @@ def adc_attr_to_request(attributes: Dict, logger: logging.Logger) -> ADCRequest:
 
     r = ADCRequest(
         bits=try_check(resolution_names, numeric=True),
-        tech=float(checkerr("tech_node", numeric=True)),
+        tech=float(checkerr("tech_node", numeric=True)) * 1e9, # m -> nm
         throughput=float(checkerr("throughput", numeric=True)),
         n_adcs=n_adcs,
         logger=logger,
