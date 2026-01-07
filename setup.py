@@ -1,4 +1,5 @@
 """Setup.py to ensure hwcomponents._version_scheme is importable during build."""
+
 import sys
 from pathlib import Path
 

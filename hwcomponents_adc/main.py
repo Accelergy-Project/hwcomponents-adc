@@ -6,7 +6,7 @@ from typing import Dict, List
 import yaml
 from hwcomponents_adc.headers import *
 from .optimizer import ADCRequest
-from hwcomponents import EnergyAreaModel, actionDynamicEnergy
+from hwcomponents import ComponentModel, action
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -62,7 +62,7 @@ def adc_attr_to_request(attributes: Dict, logger: logging.Logger) -> ADCRequest:
 
     r = ADCRequest(
         bits=try_check(resolution_names, numeric=True),
-        tech=float(checkerr("tech_node", numeric=True)) * 1e9, # m -> nm
+        tech=float(checkerr("tech_node", numeric=True)) * 1e9,  # m -> nm
         throughput=float(checkerr("throughput", numeric=True)),
         n_adcs=n_adcs,
         logger=logger,
@@ -78,7 +78,7 @@ def dict_to_str(attributes: Dict) -> str:
     return s
 
 
-class ADC(EnergyAreaModel):
+class ADC(ComponentModel):
     """
     Analog digital converter (ADC) model based on https://arxiv.org/abs/2404.06553.
 
@@ -97,6 +97,7 @@ class ADC(EnergyAreaModel):
         throughput: The throughput of the ADC in samples per second.
         n_adcs: The number of ADCs.
     """
+
     component_name = [
         "adc",
         "pim_adc",
@@ -170,53 +171,53 @@ class ADC(EnergyAreaModel):
         )
         return request.energy_per_op(self._model) * 1e-12  # pJ -> J
 
-    @actionDynamicEnergy
-    def convert(self):
+    @action
+    def convert(self) -> tuple[float, float]:
         """
-        Returns the energy for one ADC conversion in Joules.
+        Returns the energy and latency for one ADC conversion.
 
         Returns:
-            The energy for one ADC conversion in Joules.
+            (energy, latency): Tuple in (Joules, seconds).
         """
         # Assume leakage is 20% of the total energy
-        return self.get_energy() * 0.8
+        return self.get_energy() * 0.8, 0.0
 
-    @actionDynamicEnergy
-    def drive(self):
+    @action
+    def drive(self) -> tuple[float, float]:
         """
-        Returns the energy for one ADC conversion in Joules.
+        Returns the energy and latency for one ADC conversion.
 
         Returns:
-            The energy for one ADC conversion in Joules.
+            (energy, latency): Tuple in (Joules, seconds).
         """
         return self.convert()
 
-    @actionDynamicEnergy
-    def read(self):
+    @action
+    def read(self) -> tuple[float, float]:
         """
-        Returns the energy for one ADC conversion in Joules.
+        Returns the energy and latency for one ADC conversion.
 
         Returns:
-            The energy for one ADC conversion in Joules.
+            (energy, latency): Tuple in (Joules, seconds).
         """
         return self.convert()
 
-    @actionDynamicEnergy
-    def sample(self):
+    @action
+    def sample(self) -> tuple[float, float]:
         """
-        Returns the energy for one ADC conversion in Joules.
+        Returns the energy and latency for one ADC conversion.
 
         Returns:
-            The energy for one ADC conversion in Joules.
+            (energy, latency): Tuple in (Joules, seconds).
         """
         return self.convert()
 
-    @actionDynamicEnergy
-    def activate(self):
+    @action
+    def activate(self) -> tuple[float, float]:
         """
-        Returns the energy for one ADC conversion in Joules.
+        Returns the energy and latency for one ADC conversion.
 
         Returns:
-            The energy for one ADC conversion in Joules.
+            (energy, latency): Tuple in (Joules, seconds).
         """
         return self.convert()
