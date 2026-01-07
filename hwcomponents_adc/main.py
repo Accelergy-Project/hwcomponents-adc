@@ -180,7 +180,7 @@ class ADC(ComponentModel):
             (energy, latency): Tuple in (Joules, seconds).
         """
         # Assume leakage is 20% of the total energy
-        return self.get_energy() * 0.8, 0.0
+        return self.get_energy() * 0.8, 1 / self.throughput
 
     @action
     def drive(self) -> tuple[float, float]:
