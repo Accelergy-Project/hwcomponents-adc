@@ -40,7 +40,8 @@ def get_energy(params: Dict, model: Dict, allow_extrapolation: bool) -> float:
     if not allow_extrapolation:
         assert params[FREQ] <= model[FREQ][MAX], err_txt
     elif params[FREQ] > model[FREQ][MAX]:
-        logger.warning(warning_txt)
+        pass
+        # logger.warning(warning_txt)
 
     foms = sum(params[k] * model[FOMS][k] for k in [INTERCEPT, FREQ])
     foms_max_by_enob = model[FOMS][MAX_BY_ENOB]
