@@ -6,7 +6,7 @@ from typing import Dict, List
 import yaml
 from hwcomponents_adc.headers import *
 from .optimizer import ADCRequest
-from hwcomponents import ComponentModel, action
+from hwcomponents import ComponentModel, action, ActionCost
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -172,7 +172,7 @@ class ADC(ComponentModel):
         return request.energy_per_op(self._model) * 1e-12  # pJ -> J
 
     @action
-    def convert(self) -> tuple[float, float]:
+    def convert(self) -> ActionCost:
         """
         Returns the energy and latency for one ADC conversion.
 
@@ -180,10 +180,14 @@ class ADC(ComponentModel):
             (energy, latency): Tuple in (Joules, seconds).
         """
         # Assume leakage is 20% of the total energy
-        return self.get_energy() * 0.8, 1 / self.throughput
+        return ActionCost(
+            energy=self.get_energy() * 0.8,
+            throughput=self.throughput,
+            latency=1 / self.throughput,
+        )
 
     @action
-    def drive(self) -> tuple[float, float]:
+    def drive(self) -> ActionCost:
         """
         Returns the energy and latency for one ADC conversion.
 
@@ -193,7 +197,7 @@ class ADC(ComponentModel):
         return self.convert()
 
     @action
-    def read(self) -> tuple[float, float]:
+    def read(self) -> ActionCost:
         """
         Returns the energy and latency for one ADC conversion.
 
@@ -203,7 +207,7 @@ class ADC(ComponentModel):
         return self.convert()
 
     @action
-    def sample(self) -> tuple[float, float]:
+    def sample(self) -> ActionCost:
         """
         Returns the energy and latency for one ADC conversion.
 
@@ -213,7 +217,7 @@ class ADC(ComponentModel):
         return self.convert()
 
     @action
-    def activate(self) -> tuple[float, float]:
+    def activate(self) -> ActionCost:
         """
         Returns the energy and latency for one ADC conversion.
 
